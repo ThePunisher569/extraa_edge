@@ -1,10 +1,15 @@
 import 'package:extraa_edge/ui/launch_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   // TODO initialize list of rockets if not cached then go to rocket list widget
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -4,6 +4,8 @@ import 'package:extraa_edge/models/rocket.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
+import '../providers/rocket_list.dart';
+
 class RocketAPI {
   static const url = 'https://api.spacexdata.com/v4/rockets';
 
@@ -16,7 +18,7 @@ class RocketAPI {
       final rocketsResponse = jsonDecode(response.body) as List<dynamic>;
       //logger.d(rocketsResponse);
 
-      final List<Rocket> rockets = List<Rocket>.from(rocketsResponse.map((e) {
+      rockets = List<Rocket>.from(rocketsResponse.map((e) {
         return Rocket.fromMap(e);
       }).toList());
 
