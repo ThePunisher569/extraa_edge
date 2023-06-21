@@ -1,6 +1,6 @@
 import 'package:extraa_edge/ui/rocket_list.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
 
 class LaunchScreen extends StatefulWidget {
   const LaunchScreen({Key? key}) : super(key: key);
@@ -50,31 +50,31 @@ class _LaunchScreenState extends State<LaunchScreen> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 32, left: 32, right: 32),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                child: AnimatedButton(
                   height: 54,
-                  child: FilledButton.icon(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                        Colors.blue.shade900,
+                  width: MediaQuery.of(context).size.width,
+                  text: 'Let\'s get you started',
+                  selectedText: 'Enjoy the Journey!',
+                  selectedTextColor: Colors.white70,
+                  transitionType: TransitionType.LEFT_TOP_ROUNDER,
+                  textStyle: Theme.of(context).textTheme.headlineSmall!,
+                  backgroundColor: Colors.black26,
+                  borderColor: Colors.white70,
+                  borderRadius: 32,
+                  borderWidth: 2,
+                  selectedBackgroundColor: Colors.blue.shade900,
+                  animationDuration: const Duration(seconds: 1),
+                  onPress: () => Future.delayed(
+                    const Duration(seconds: 1),
+                    () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) => const RocketList(),
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const RocketList()));
-                    },
-                    icon: const Text(
-                      'Let\'s get you started',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                    label: const Icon(
-                      color: Colors.white,
-                      FluentIcons.ios_arrow_rtl_24_filled,
                     ),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
