@@ -4,16 +4,20 @@ import 'package:flutter/material.dart';
 
 class TitleWidget extends StatelessWidget {
   final Rocket rocket;
+
   const TitleWidget({Key? key, required this.rocket}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           rocket.name,
-          style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context)
+              .textTheme
+              .headlineLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -22,9 +26,7 @@ class TitleWidget extends StatelessWidget {
               width: 20,
               height: 20,
               decoration: BoxDecoration(
-                color: rocket.active
-                    ? Colors.greenAccent
-                    : Colors.redAccent,
+                color: rocket.active ? Colors.greenAccent : Colors.redAccent,
                 borderRadius: BorderRadius.circular(40),
               ),
             ),
@@ -38,9 +40,7 @@ class TitleWidget extends StatelessWidget {
                   .bodyLarge
                   ?.copyWith(fontWeight: FontWeight.bold),
               endColor: Colors.black26,
-              beginColor: rocket.active
-                  ? Colors.greenAccent
-                  : Colors.redAccent,
+              beginColor: rocket.active ? Colors.greenAccent : Colors.redAccent,
               duration: const Duration(milliseconds: 800),
             ),
           ],

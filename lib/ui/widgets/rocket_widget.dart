@@ -1,4 +1,3 @@
-// TODO implement a single rocket widget to be shown in list view
 import 'package:extraa_edge/models/rocket.dart';
 import 'package:extraa_edge/ui/rocket_details.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,9 @@ class _RocketWidgetState extends State<RocketWidget> {
               if (loadingProgress == null) return child;
               return const Center(child: CircularProgressIndicator());
             },
-            errorBuilder: (context, error, stackTrace) => const Center(child: Text('Cannot Load Image'),),
+            errorBuilder: (context, error, stackTrace) => const Center(
+              child: Text('Cannot Load Image'),
+            ),
           ),
           Container(
             decoration: BoxDecoration(

@@ -4,6 +4,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 
 class HeightWidget extends StatefulWidget {
   final Rocket rocket;
+
   const HeightWidget({Key? key, required this.rocket}) : super(key: key);
 
   @override
@@ -12,11 +13,13 @@ class HeightWidget extends StatefulWidget {
 
 class _HeightWidgetState extends State<HeightWidget> {
   late bool changeHeight;
+
   @override
   void initState() {
     changeHeight = false;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Row(

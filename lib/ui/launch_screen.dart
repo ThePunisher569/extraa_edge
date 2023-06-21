@@ -1,13 +1,9 @@
 import 'package:extraa_edge/ui/rocket_list.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LaunchScreen extends StatefulWidget {
-
-
-  const LaunchScreen({Key? key})
-      : super(key: key);
+  const LaunchScreen({Key? key}) : super(key: key);
 
   @override
   State<LaunchScreen> createState() => _LaunchScreenState();
@@ -22,7 +18,10 @@ class _LaunchScreenState extends State<LaunchScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Rockets by SpaceX',style: Theme.of(context).textTheme.headlineSmall,),
+        title: Text(
+          'Rockets by SpaceX',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
         centerTitle: true,
       ),
       body: SizedBox(
@@ -42,7 +41,9 @@ class _LaunchScreenState extends State<LaunchScreen> {
                   if (loadingProgress == null) return child;
                   return const Center(child: CircularProgressIndicator());
                 },
-                errorBuilder: (context, error, stackTrace) => const Center(child: Text('Cannot Load Image'),),
+                errorBuilder: (context, error, stackTrace) => const Center(
+                  child: Text('Cannot Load Image'),
+                ),
               ),
             ),
             Align(
@@ -58,8 +59,9 @@ class _LaunchScreenState extends State<LaunchScreen> {
                         Colors.blue.shade900,
                       ),
                     ),
-                    onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const RocketList()));
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const RocketList()));
                     },
                     icon: const Text(
                       'Let\'s get you started',

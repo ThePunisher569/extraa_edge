@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 class RocketAPI {
-
   static const url = 'https://api.spacexdata.com/v4/rockets';
 
   final logger = Logger();

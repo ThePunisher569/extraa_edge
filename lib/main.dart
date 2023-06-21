@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
           background: const Color(0xff121212),
           brightness: Brightness.dark,
         ),
-        textTheme: GoogleFonts.orbitronTextTheme().apply(bodyColor: Colors.white,displayColor: Colors.white),
+        textTheme: GoogleFonts.orbitronTextTheme()
+            .apply(bodyColor: Colors.white, displayColor: Colors.white),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Rockets by SpaceX'),
@@ -39,7 +40,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return const LaunchScreen();
