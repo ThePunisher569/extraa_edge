@@ -24,7 +24,7 @@ class _HeightWidgetState extends State<HeightWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              height
+              !height
                   ? 'Height : ${widget.rocket.height} meters'
                   : 'Height : ${widget.rocket.heightInFeet} feet',
               style: Theme.of(context)
@@ -38,7 +38,7 @@ class _HeightWidgetState extends State<HeightWidget> {
             ToggleSwitch(
               minWidth: 80.0,
               minHeight: 32,
-              initialLabelIndex: !height ? 1 : 0,
+              initialLabelIndex: height ? 1 : 0,
               cornerRadius: 20.0,
               activeFgColor: Colors.white,
               totalSwitches: 2,
