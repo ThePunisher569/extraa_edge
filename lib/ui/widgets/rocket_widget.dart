@@ -42,34 +42,28 @@ class _RocketWidgetState extends State<RocketWidget> {
               ),
             ),
           ),
-          Padding(
+          Container(
             padding: const EdgeInsets.only(bottom: 64.0, left: 16.0),
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                widget.rocket.name,
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
+            alignment: Alignment.bottomLeft,
+            child: Text(
+              widget.rocket.name,
+              style: Theme.of(context).textTheme.displaySmall,
             ),
           ),
-          Padding(
+          Container(
             padding: const EdgeInsets.only(bottom: 40.0, left: 16.0),
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                'Engines : ${widget.rocket.engines}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
+            alignment: Alignment.bottomLeft,
+            child: Text(
+              'Engines : ${widget.rocket.engines}',
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
-          Padding(
+          Container(
             padding: const EdgeInsets.only(bottom: 8.0, right: 8),
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: Text(
-                widget.rocket.country,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+            alignment: Alignment.bottomRight,
+            child: Text(
+              widget.rocket.country,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           InkWell(

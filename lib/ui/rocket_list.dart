@@ -1,5 +1,6 @@
 import 'package:extraa_edge/api/rocket_api.dart';
 import 'package:extraa_edge/providers/rocket_list.dart';
+import 'package:extraa_edge/ui/widgets/linear_progress.dart';
 import 'package:extraa_edge/ui/widgets/rocket_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,9 +48,7 @@ class _RocketListState extends State<RocketList> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
+        ? const LinearProgress()
         : Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.black26,
