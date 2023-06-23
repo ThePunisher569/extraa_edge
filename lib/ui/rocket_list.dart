@@ -55,12 +55,12 @@ class _RocketListState extends ConsumerState<RocketList> {
 
       displayErrorDialog(context);
     }
-    setState(() {
-      isLoading = false;
-    });
   }
 
   Future<void> loadFromNetwork() async {
+    setState(() {
+      isLoading = true;
+    });
     final client = RocketAPI();
     List rocketsResponse = await client.getAllRockets();
 
@@ -71,6 +71,10 @@ class _RocketListState extends ConsumerState<RocketList> {
     ref.read(rocketsProvider.notifier).loadRockets(rocketsResponse);
 
     print('loaded from network');
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void displayErrorDialog(BuildContext context) async {
@@ -147,7 +151,7 @@ class _RocketListState extends ConsumerState<RocketList> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Latest Rockets Loaded Successfully!'),
+          content: Text('Latest rockets loaded successfully!'),
         ),
       );
     } on Exception catch (e) {
@@ -155,10 +159,14 @@ class _RocketListState extends ConsumerState<RocketList> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Cannot Load Latest Rockets!'),
+          content: Text('Cannot load latest rockets!'),
           backgroundColor: Colors.redAccent,
         ),
       );
+
+      setState(() {
+        isLoading=false;
+      });
     }
   }
 }

@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import 'widgets/image.dart';
 import 'widgets/launch_button.dart';
 
 class LaunchScreen extends StatefulWidget {
@@ -33,25 +33,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
             SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: CachedNetworkImage(
-                imageUrl: imageURL,
-                fit: BoxFit.fitHeight,
-                colorBlendMode: BlendMode.darken,
-                filterQuality: FilterQuality.high,
-                progressIndicatorBuilder: (context, child, loadingProgress) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                        value: loadingProgress.progress),
-                  );
-                },
-                errorWidget: (context, error, stackTrace) => const Center(
-                  child: Icon(
-                    Icons.broken_image,
-                    size: 108,
-                    color: Colors.white70,
-                  ),
-                ),
-              ),
+              child: RocketImage(url: imageURL,fitType: BoxFit.fitHeight,),
             ),
             const LaunchButton(),
           ],
