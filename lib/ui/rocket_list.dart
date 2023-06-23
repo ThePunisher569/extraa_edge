@@ -27,6 +27,10 @@ class _RocketListState extends ConsumerState<RocketList> {
   final logger = Logger();
 
   void loadRockets() async {
+    setState(() {
+      isLoading=true;
+    });
+
     try {
       final client = RocketAPI();
       List rocketsResponse = await client.getAllRockets();
@@ -37,6 +41,7 @@ class _RocketListState extends ConsumerState<RocketList> {
 
       showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => AlertDialog(
           icon: const Icon(
             Icons.error,
@@ -44,12 +49,14 @@ class _RocketListState extends ConsumerState<RocketList> {
           ),
           title: const Text('Cannot Load Rockets Data'),
           actions: [
-            FilledButton(
+            FilledButton.icon(
               onPressed: () {
                 Navigator.pop(context);
+                loadRockets();
               },
-              child: const Text(
-                'Okay',
+              icon: const Icon(Icons.refresh),
+              label: const Text(
+                'Refresh',
               ),
             ),
           ],
