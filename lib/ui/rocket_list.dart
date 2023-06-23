@@ -6,19 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 
-class RocketList extends StatefulWidget {
+class RocketList extends ConsumerStatefulWidget {
   const RocketList({Key? key}) : super(key: key);
 
   final String title = 'Rockets by SpaceX';
 
   @override
-  State<RocketList> createState() => _RocketListState();
+  ConsumerState<RocketList> createState() => _RocketListState();
 }
 
-class _RocketListState extends State<RocketList> {
+class _RocketListState extends ConsumerState<RocketList> {
   bool isLoading = true;
-
-  // List<Rocket> rockets = [];
 
   @override
   void initState() {
@@ -29,59 +27,71 @@ class _RocketListState extends State<RocketList> {
   final logger = Logger();
 
   void loadRockets() async {
-    setState(() {
-      isLoading = true;
-    });
     try {
       final client = RocketAPI();
-      await client.getAllRockets();
-      setState(() {
-        isLoading = false;
-      });
+      List rocketsResponse = await client.getAllRockets();
+
+      ref.read(rocketsProvider.notifier).loadRockets(rocketsResponse);
     } on Exception catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Cannot Load Rocket Data')));
       logger.d(e.toString());
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          icon: const Icon(
+            Icons.error,
+            size: 32,
+          ),
+          title: const Text('Cannot Load Rockets Data'),
+          actions: [
+            FilledButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Okay',
+              ),
+            ),
+          ],
+        ),
+      );
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const LinearProgress()
-        : Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.black26,
-              title: Text(
-                'Rockets by SpaceX',
-                style: Theme.of(context).textTheme.headlineSmall,
+    final rockets = ref.watch(rocketsProvider);
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black26,
+        title: Text(
+          'Rockets by SpaceX',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
+        centerTitle: true,
+      ),
+      body: isLoading
+          ? const LinearProgress()
+          : ListView.separated(
+              padding: const EdgeInsets.all(16),
+              itemBuilder: (context, index) => index == 0
+                  ? Align(
+                      alignment: Alignment.centerRight,
+                      child: FilledButton.icon(
+                        onPressed: loadRockets,
+                        icon: const Icon(Icons.refresh),
+                        label: const Text('Refresh'),
+                      ),
+                    )
+                  : RocketWidget(rocket: rockets[index - 1]),
+              separatorBuilder: (context, index) => const SizedBox(
+                height: 32,
               ),
-              centerTitle: true,
+              itemCount: rockets.length,
             ),
-            body: Consumer(
-              builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                final rockets = ref.watch(rocketsProvider);
-                print('rockets list');
-                logger.d(rockets);
-                return ListView.separated(
-                  padding: const EdgeInsets.all(16),
-                  itemBuilder: (context, index) => index == 0
-                      ? Align(
-                          alignment: Alignment.centerRight,
-                          child: FilledButton.icon(
-                            onPressed: loadRockets,
-                            icon: const Icon(Icons.refresh),
-                            label: const Text('Refresh'),
-                          ),
-                        )
-                      : RocketWidget(rocket: rockets[index - 1]),
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 32,
-                  ),
-                  itemCount: rockets.length,
-                );
-              },
-            ),
-          );
+    );
   }
 }
