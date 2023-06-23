@@ -114,39 +114,51 @@ class _RocketListState extends ConsumerState<RocketList> {
       body: isLoading
           ? const LinearProgress()
           : LiquidPullToRefresh(
-              height: 80,
+              height: 56,
               color: Colors.blueAccent,
               showChildOpacityTransition: false,
-              onRefresh: () async {
-                try {
-                  await loadFromNetwork();
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Latest Rockets Loaded Successfully!'),
-                    ),
-                  );
-                } on Exception catch (e) {
-                  logger.d(e.toString());
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Cannot Load Latest Rockets!'),
-                      backgroundColor: Colors.redAccent,
-                    ),
-                  );
-                }
-              },
+              onRefresh: _onRefresh,
               child: ListView.separated(
                 padding: const EdgeInsets.all(16),
-                itemBuilder: (context, index) =>
-                    RocketWidget(rocket: rockets[index]),
+                itemBuilder: (context, index) => index == 0
+                    ? const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            'Swipe down to get latest Rockets',
+                            textAlign: TextAlign.center,
+                          ),
+                          Icon(Icons.swipe_down),
+                        ],
+                      )
+                    : RocketWidget(rocket: rockets[index - 1]),
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 32,
                 ),
-                itemCount: rockets.length,
+                itemCount: rockets.length + 1,
               ),
             ),
     );
+  }
+
+  Future<void> _onRefresh() async {
+    try {
+      await loadFromNetwork();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Latest Rockets Loaded Successfully!'),
+        ),
+      );
+    } on Exception catch (e) {
+      logger.d(e.toString());
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Cannot Load Latest Rockets!'),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+    }
   }
 }
