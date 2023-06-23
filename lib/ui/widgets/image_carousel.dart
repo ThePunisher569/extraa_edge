@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extraa_edge/models/rocket.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +15,22 @@ class ImageCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       items: rocket.flickerImages
-          .map((e) => Image.network(
-                e,
+          .map((String e) => CachedNetworkImage(
+                imageUrl: e,
                 fit: BoxFit.fill,
                 colorBlendMode: BlendMode.darken,
                 filterQuality: FilterQuality.high,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return const Center(child: CircularProgressIndicator());
-                },
-                errorBuilder: (context, error, stackTrace) => const Center(
-                  child: Text('Cannot Load Image'),
+                progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: CircularProgressIndicator(
+                    value: progress.progress,
+                  ),
+                ),
+                errorWidget: (context, error, stackTrace) => const Center(
+                  child: Icon(
+                    Icons.broken_image,
+                    size: 48,
+                    color: Colors.white70,
+                  ),
                 ),
               ))
           .toList(),

@@ -21,14 +21,19 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.dark,
-      theme: ThemeData(
+      darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
+          seedColor: Colors.blueAccent,
           background: const Color(0xff121212),
           brightness: Brightness.dark,
         ),
         textTheme: GoogleFonts.orbitronTextTheme()
             .apply(bodyColor: Colors.white, displayColor: Colors.white),
+        snackBarTheme: const SnackBarThemeData(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.blueAccent,
+          contentTextStyle: TextStyle(color: Colors.white70),
+        ),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Rockets by SpaceX'),

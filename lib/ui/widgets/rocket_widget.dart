@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extraa_edge/models/rocket.dart';
 import 'package:extraa_edge/ui/rocket_details.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +21,22 @@ class _RocketWidgetState extends State<RocketWidget> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.network(
-            widget.rocket.flickerImages[0],
+          CachedNetworkImage(
+            imageUrl: widget.rocket.flickerImages[0],
             fit: BoxFit.fill,
             colorBlendMode: BlendMode.darken,
             filterQuality: FilterQuality.high,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return const Center(child: CircularProgressIndicator());
-            },
-            errorBuilder: (context, error, stackTrace) => const Center(
-              child: Text('Cannot Load Image'),
+            progressIndicatorBuilder: (context, url, progress) => Center(
+              child: CircularProgressIndicator(
+                value: progress.progress,
+              ),
+            ),
+            errorWidget: (context, error, stackTrace) => const Center(
+              child: Icon(
+                Icons.broken_image,
+                size: 48,
+                color: Colors.white70,
+              ),
             ),
           ),
           Container(

@@ -4,6 +4,8 @@ import 'package:extraa_edge/ui/widgets/linear_progress.dart';
 import 'package:extraa_edge/ui/widgets/rocket_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:logger/logger.dart';
 
 class RocketList extends ConsumerStatefulWidget {
@@ -18,6 +20,8 @@ class RocketList extends ConsumerStatefulWidget {
 class _RocketListState extends ConsumerState<RocketList> {
   bool isLoading = true;
 
+  final LocalStorage localStorage = LocalStorage('rockets.json');
+
   @override
   void initState() {
     loadRockets();
@@ -28,44 +32,71 @@ class _RocketListState extends ConsumerState<RocketList> {
 
   void loadRockets() async {
     setState(() {
-      isLoading=true;
+      isLoading = true;
     });
 
     try {
-      final client = RocketAPI();
-      List rocketsResponse = await client.getAllRockets();
+      if ((await localStorage.ready)) {
+        List? rocketsLocal = localStorage.getItem('rocketsList');
 
-      ref.read(rocketsProvider.notifier).loadRockets(rocketsResponse);
+        if (rocketsLocal != null && rocketsLocal.isNotEmpty) {
+          ref.read(rocketsProvider.notifier).loadRockets(rocketsLocal);
+          setState(() {
+            isLoading = false;
+          });
+          print('loaded from cache');
+          return;
+        } else {
+          loadFromNetwork();
+        }
+      }
     } on Exception catch (e) {
       logger.d(e.toString());
 
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          icon: const Icon(
-            Icons.error,
-            size: 32,
-          ),
-          title: const Text('Cannot Load Rockets Data'),
-          actions: [
-            FilledButton.icon(
-              onPressed: () {
-                Navigator.pop(context);
-                loadRockets();
-              },
-              icon: const Icon(Icons.refresh),
-              label: const Text(
-                'Refresh',
-              ),
-            ),
-          ],
-        ),
-      );
+      displayErrorDialog(context);
     }
     setState(() {
       isLoading = false;
     });
+  }
+
+  Future<void> loadFromNetwork() async {
+    final client = RocketAPI();
+    List rocketsResponse = await client.getAllRockets();
+
+    if ((await localStorage.ready)) {
+      localStorage.setItem('rocketsList', rocketsResponse);
+    }
+
+    ref.read(rocketsProvider.notifier).loadRockets(rocketsResponse);
+
+    print('loaded from network');
+  }
+
+  void displayErrorDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        icon: const Icon(
+          Icons.error,
+          size: 32,
+        ),
+        title: const Text('Unable to Load Rockets Data'),
+        actions: [
+          FilledButton.icon(
+            onPressed: () {
+              Navigator.pop(context);
+              loadFromNetwork();
+            },
+            icon: const Icon(Icons.refresh),
+            label: const Text(
+              'Refresh',
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -82,22 +113,39 @@ class _RocketListState extends ConsumerState<RocketList> {
       ),
       body: isLoading
           ? const LinearProgress()
-          : ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemBuilder: (context, index) => index == 0
-                  ? Align(
-                      alignment: Alignment.centerRight,
-                      child: FilledButton.icon(
-                        onPressed: loadRockets,
-                        icon: const Icon(Icons.refresh),
-                        label: const Text('Refresh'),
-                      ),
-                    )
-                  : RocketWidget(rocket: rockets[index - 1]),
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 32,
+          : LiquidPullToRefresh(
+              height: 80,
+              color: Colors.blueAccent,
+              showChildOpacityTransition: false,
+              onRefresh: () async {
+                try {
+                  await loadFromNetwork();
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Latest Rockets Loaded Successfully!'),
+                    ),
+                  );
+                } on Exception catch (e) {
+                  logger.d(e.toString());
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Cannot Load Latest Rockets!'),
+                      backgroundColor: Colors.redAccent,
+                    ),
+                  );
+                }
+              },
+              child: ListView.separated(
+                padding: const EdgeInsets.all(16),
+                itemBuilder: (context, index) =>
+                    RocketWidget(rocket: rockets[index]),
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 32,
+                ),
+                itemCount: rockets.length,
               ),
-              itemCount: rockets.length,
             ),
     );
   }
