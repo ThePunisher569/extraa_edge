@@ -12,12 +12,9 @@ class RocketImage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: url,
       fit: fitType,
-      colorBlendMode: BlendMode.darken,
       filterQuality: FilterQuality.high,
-      progressIndicatorBuilder: (context, url, progress) => Center(
-        child: CircularProgressIndicator(
-          value: progress.progress,
-        ),
+      placeholder: (context, url) => const Center(
+        child: CircularProgressIndicator(),
       ),
       errorWidget: (context, error, stackTrace) => const Center(
         child: Icon(

@@ -26,17 +26,17 @@ class _LaunchButtonState extends State<LaunchButton> {
           child: AnimatedButton(
             height: 54,
             width: MediaQuery.of(context).size.width,
-            text: 'Let\'s get you started',
+            text: 'Let\'s get started',
             isSelected: isSelected,
             selectedText: 'Enjoy the Journey!',
-            selectedTextColor: Colors.white70,
+            selectedTextColor: Colors.white,
             transitionType: TransitionType.LEFT_TOP_ROUNDER,
             textStyle: Theme.of(context).textTheme.headlineSmall!,
-            backgroundColor: Colors.black26,
+            backgroundColor: Colors.black12,
             borderColor: Colors.white70,
             borderRadius: 32,
             borderWidth: 2,
-            selectedBackgroundColor: Colors.blue.shade900,
+            selectedBackgroundColor: Colors.blueAccent,
             animationDuration: const Duration(seconds: 1),
             onChanges: (value) {
               ref.read(buttonSelectionProvider.notifier).changeSelection();

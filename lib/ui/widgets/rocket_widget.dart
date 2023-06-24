@@ -22,7 +22,10 @@ class _RocketWidgetState extends State<RocketWidget> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          RocketImage(url: widget.rocket.flickerImages[0],fitType: BoxFit.fill,),
+          RocketImage(
+            url: widget.rocket.flickerImages[0],
+            fitType: BoxFit.fill,
+          ),
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(

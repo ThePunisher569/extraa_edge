@@ -17,20 +17,15 @@ class ImageCarousel extends StatelessWidget {
     return CarouselSlider(
       items: rocket.flickerImages
           .map((String e) => InkWell(
-                onTap: () {
-                  showDialog(
+                onTap: () => showDialog(
                       context: context,
                       useSafeArea: true,
                       builder: (context) {
-                        return Dialog(
-                          backgroundColor: Colors.transparent,
-                          child: RocketImage(
-                            url: e,
-                            fitType: BoxFit.fill,
-                          ),
+                        return RocketImage(
+                          url: e,
+                          fitType: BoxFit.scaleDown,
                         );
-                      });
-                },
+                      }),
                 child: RocketImage(
                   url: e,
                   fitType: BoxFit.fill,

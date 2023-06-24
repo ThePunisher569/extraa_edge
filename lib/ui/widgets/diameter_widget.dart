@@ -45,16 +45,18 @@ class _DiameterWidgetState extends State<DiameterWidget> {
               minWidth: 80.0,
               minHeight: 32,
               initialLabelIndex: diameter ? 1 : 0,
-              cornerRadius: 20.0,
+              cornerRadius: 16.0,
               activeFgColor: Colors.white,
+              inactiveBgColor: Colors.grey.shade600,
               totalSwitches: 2,
               centerText: true,
               customTextStyles: [Theme.of(context).textTheme.bodySmall],
               labels: const ['Meters', 'Feet'],
               activeBgColors: const [
                 [Colors.deepPurpleAccent],
-                [Colors.indigoAccent]
+                [Colors.blueAccent]
               ],
+              animate: true,
               changeOnTap: true,
               curve: Curves.fastEaseInToSlowEaseOut,
               onToggle: (index) =>
