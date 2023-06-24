@@ -23,8 +23,8 @@ class TitleWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-              width: 20,
-              height: 20,
+              width: 16,
+              height: 16,
               decoration: BoxDecoration(
                 color: rocket.active ? Colors.greenAccent : Colors.redAccent,
                 borderRadius: BorderRadius.circular(40),
