@@ -1,5 +1,6 @@
 import 'package:extraa_edge/api/rocket_api.dart';
 import 'package:extraa_edge/providers/rocket_list.dart';
+import 'package:extraa_edge/ui/widgets/appbar.dart';
 import 'package:extraa_edge/ui/widgets/linear_progress.dart';
 import 'package:extraa_edge/ui/widgets/rocket_widget.dart';
 import 'package:flutter/material.dart';
@@ -126,14 +127,7 @@ class _RocketListState extends ConsumerState<RocketList> {
   Widget build(BuildContext context) {
     final rockets = ref.watch(rocketsProvider);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black26,
-        title: Text(
-          'Rockets by SpaceX',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
-        centerTitle: true,
-      ),
+      appBar: const MyAppBar(),
       body: isLoading
           ? const LinearProgress()
           : LiquidPullToRefresh(

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
-  // TODO initialize list of rockets if not cached then go to rocket list widget
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           background: const Color(0xff121212),
           brightness: Brightness.dark,
         ),
-        textTheme: GoogleFonts.orbitronTextTheme()
+        textTheme: GoogleFonts.spaceGroteskTextTheme()
             .apply(bodyColor: Colors.white, displayColor: Colors.white),
         snackBarTheme: const SnackBarThemeData(
           behavior: SnackBarBehavior.floating,

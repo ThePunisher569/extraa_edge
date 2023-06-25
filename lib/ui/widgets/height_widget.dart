@@ -46,10 +46,7 @@ class _HeightWidgetState extends State<HeightWidget> {
               centerText: true,
               customTextStyles: [Theme.of(context).textTheme.bodySmall],
               labels: const ['Meters', 'Feet'],
-              activeBgColors: const [
-                [Colors.deepPurpleAccent],
-                [Colors.blueAccent]
-              ],
+              activeBgColor: const [Colors.blueAccent],
               animate: true,
               changeOnTap: true,
               curve: Curves.fastEaseInToSlowEaseOut,

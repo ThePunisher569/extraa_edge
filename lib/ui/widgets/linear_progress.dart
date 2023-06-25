@@ -12,10 +12,10 @@ class LinearProgress extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           child: const LinearProgressIndicator(
             minHeight: 16,
+            color: Colors.blueAccent,
           ),
         ),
       ),
-    )
-    ;
+    );
   }
 }

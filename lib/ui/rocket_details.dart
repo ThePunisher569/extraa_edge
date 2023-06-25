@@ -1,3 +1,4 @@
+import 'package:extraa_edge/ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,14 +22,7 @@ class _RocketDetailsWidgetState extends State<RocketDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text(
-          'Rockets by SpaceX',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
-        centerTitle: true,
-      ),
+      appBar: const MyAppBar(),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -54,25 +48,31 @@ class _RocketDetailsWidgetState extends State<RocketDetailsWidget> {
               ),
               Text(
                 'Cost Per Launch : ${NumberFormat('#,##,000').format(widget.rocket.costPerLaunch)} USD',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white70,
+                    ),
               ),
               const SizedBox(
                 height: 32,
               ),
               Text(
                 'Success Rate Percent : ${widget.rocket.successRatePercent} %',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white70,
+                    ),
               ),
               const SizedBox(
                 height: 16,
               ),
-              Text(widget.rocket.description),
+              Text(
+                widget.rocket.description,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white70,
+                    ),
+              ),
               const SizedBox(
                 height: 32,
               ),

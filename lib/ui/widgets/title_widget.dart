@@ -1,6 +1,7 @@
 import 'package:blinking_text/blinking_text.dart';
 import 'package:extraa_edge/models/rocket.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TitleWidget extends StatelessWidget {
   final Rocket rocket;
@@ -14,10 +15,10 @@ class TitleWidget extends StatelessWidget {
       children: [
         Text(
           rocket.name,
-          style: Theme.of(context)
-              .textTheme
-              .headlineLarge
-              ?.copyWith(fontWeight: FontWeight.bold),
+          style: GoogleFonts.orbitron(
+            fontSize: Theme.of(context).textTheme.headlineLarge?.fontSize,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,

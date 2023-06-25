@@ -14,13 +14,6 @@ class DiameterWidget extends StatefulWidget {
 }
 
 class _DiameterWidgetState extends State<DiameterWidget> {
-  // late bool changeDiameter;
-  @override
-  void initState() {
-    // changeDiameter=false;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer(
@@ -52,10 +45,7 @@ class _DiameterWidgetState extends State<DiameterWidget> {
               centerText: true,
               customTextStyles: [Theme.of(context).textTheme.bodySmall],
               labels: const ['Meters', 'Feet'],
-              activeBgColors: const [
-                [Colors.deepPurpleAccent],
-                [Colors.blueAccent]
-              ],
+              activeBgColor: const [Colors.blueAccent],
               animate: true,
               changeOnTap: true,
               curve: Curves.fastEaseInToSlowEaseOut,

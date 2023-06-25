@@ -1,6 +1,7 @@
 import 'package:extraa_edge/models/rocket.dart';
 import 'package:extraa_edge/ui/rocket_details.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'image.dart';
 
@@ -29,7 +30,7 @@ class _RocketWidgetState extends State<RocketWidget> {
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+                colors: [Colors.transparent, Colors.black.withOpacity(0.6)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -40,7 +41,9 @@ class _RocketWidgetState extends State<RocketWidget> {
             alignment: Alignment.bottomLeft,
             child: Text(
               widget.rocket.name,
-              style: Theme.of(context).textTheme.displaySmall,
+              style: GoogleFonts.orbitron(
+                fontSize: Theme.of(context).textTheme.displaySmall?.fontSize,
+              ),
             ),
           ),
           Container(
@@ -48,15 +51,17 @@ class _RocketWidgetState extends State<RocketWidget> {
             alignment: Alignment.bottomLeft,
             child: Text(
               'Engines : ${widget.rocket.engines}',
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(bottom: 8.0, right: 8),
+            padding: const EdgeInsets.only(bottom: 8.0, right: 8.0),
             alignment: Alignment.bottomRight,
             child: Text(
               widget.rocket.country,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           ),
           InkWell(
